@@ -1,0 +1,3 @@
+timestamp,volume,open,high,low,close,chg,percent,turnoverrate,amount,volume_post,amount_post,pe,pb,ps,pcf,market_capital,balance,hold_volume_cn,hold_ratio_cn,net_volume_cn,hold_volume_hk,hold_ratio_hk,net_volume_hk
+1602518400000,175512,36.19,43.43,36.19,43.43,13.27,44.0,0.72,7587603.0,,,31.8466,3.4008,3.9052,80.54,4220323800.16,,,,,,,
+1602604800000,10902237,47.77,47.77,44.01,47.77,4.34,9.99,44.81,508904227.0,,,35.0291,3.7406,4.2955,88.5885,4642064654.24,,,,,,,
