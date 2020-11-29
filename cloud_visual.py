@@ -202,25 +202,24 @@ def readLatest():
     db = client[dbname]
     collection = db[read_numerator]
 
-    doc = collection.find({'module': '半导体', 'data': '2019-08-09'})
+    doc = collection.find()
 
     docarray = []
     for x in doc:
-        global latestId
         dic = {}
-        id = int(str(x['_id'])[0:8], 16)
-        if id > latestId:
-            latestId = id
-            dic['module'] = x['module']
-            dic['date'] = x['data']
-            dic['numerator'] = x['numerator']
-            docarray.append(dic)
-    print(latestId)
+
+        dic['module'] = x['module']
+        dic['date'] = x['date']
+        dic['numerator'] = x['numerator']
+        docarray.append(dic)
+
+    print(docarray)
     return docarray
 
 
 def bar_ups_and_downs() -> Bar:
     # 这里要改成不断获取最新数据的函数
+
     real_datas = readLatest()
     print("real_datas:")
     print(real_datas)
@@ -241,8 +240,8 @@ def bar_ups_and_downs() -> Bar:
             bar_data.append(0)
         else:
             bar_data.append(update_data[data['modules'][i]])
-    print(bar_data)
-    if real_datas == []:
+
+    if not real_datas:
         c = (
             Bar()
                 .add_xaxis(data['modules'])
@@ -262,7 +261,7 @@ def bar_ups_and_downs() -> Bar:
                 .add_yaxis("实时获取的股票涨幅", bar_data)
                 .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
                 .set_global_opts(
-                title_opts=opts.TitleOpts(title=real_data['date'] + " 实时获取板块股票涨跌幅柱状图"),
+                title_opts=opts.TitleOpts(title=" 实时获取板块股票涨跌幅柱状图"),
                 yaxis_opts=opts.AxisOpts(name="股票涨跌幅"),
                 xaxis_opts=opts.AxisOpts(name="板块名", is_show=True),
                 # datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
