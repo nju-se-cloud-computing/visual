@@ -7,68 +7,66 @@
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-wordcloud.min.js"></script>
     <style>
-        div{
-            left: 40px;
+        div {
+            left: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="block" style="width:100px; height:60px;"></div>
-    <div id="bar" style="width:1200px; height:700px;" align="center" top=100px left=50px></div>
-    <div id="block" style="width:1000px; height:100px;"></div>
-    <div id="cloud" style="width:1200px; height:700px;" align="center"></div>
-    <div id="block" style="width:100px; height:60px;"></div>
-    <div id="bar_ups" style="width:1200px; height:700px;" align="center"></div>
 
-    <script>
-        var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
-        var chart_cloud = echarts.init(document.getElementById('cloud'), 'white', {renderer: 'canvas'});
-        var chart_ups = echarts.init(document.getElementById('bar_ups'), 'white', {renderer: 'canvas'});
+<div id="bar" style="width:1200px; height:600px;" align="center" top=100px left=50px></div>
+<div id="cloud" style="width:1200px; height:600px;" align="center"></div>
+<div id="bar_ups" style="width:1200px; height:600px;" align="center"></div>
 
-        $(
-            function () {
-                fetchData(chart);
-                fetchCloudData(chart_cloud);
-                fetchBarUpsData(chart_ups)
-                setInterval(fetchData,2000);
-                setInterval(fetchCloudData, 2000);
-                setInterval(fetchBarUpsData,2000);
+<script>
+    var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+    var chart_cloud = echarts.init(document.getElementById('cloud'), 'white', {renderer: 'canvas'});
+    var chart_ups = echarts.init(document.getElementById('bar_ups'), 'white', {renderer: 'canvas'});
 
+    $(
+        function () {
+            fetchData(chart);
+            fetchCloudData(chart_cloud);
+            fetchBarUpsData(chart_ups)
+            setInterval(fetchData, 2000);
+            setInterval(fetchCloudData, 2000);
+            setInterval(fetchBarUpsData, 2000);
+
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/barChart",
+            dataType: 'json',
+            success: function (result) {
+                chart.setOption(result);
             }
-        );
+        });
+    };
 
-        function fetchData() {
-            $.ajax({
-                type: "GET",
-                url: "http://127.0.0.1:5000/barChart",
-                dataType: 'json',
-                success: function (result) {
-                    chart.setOption(result);
-                }
-            });
-        };
+    function fetchCloudData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/cloudChart",
+            dataType: 'json',
+            success: function (result) {
+                chart_cloud.setOption(result);
+            }
+        });
+    };
 
-        function fetchCloudData() {
-            $.ajax({
-                type: "GET",
-                url: "http://127.0.0.1:5000/cloudChart",
-                dataType: 'json',
-                success: function (result) {
-                    chart_cloud.setOption(result);
-                }
-            });
-        };
-
-        function fetchBarUpsData() {
-            $.ajax({
-                type: "GET",
-                url: "http://127.0.0.1:5000/bar_ups",
-                dataType: 'json',
-                success: function (result) {
-                    chart_ups.setOption(result);
-                }
-            });
-        };
-    </script>
+    function fetchBarUpsData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/bar_ups",
+            dataType: 'json',
+            success: function (result) {
+                chart_ups.setOption(result);
+            }
+        });
+    };
+</script>
 </body>
 </html>
