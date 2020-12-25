@@ -176,7 +176,7 @@ def bar_base() -> Bar:
 # 生成word_cloud图像
 def world_cloud() -> WordCloud:
     for i in range(len(data['word_cloud'])):
-        data['word_cloud'][i][1] = round(data['word_cloud'][i][1], 2)
+        data['word_cloud'][i][1] = round(data['word_cloud'][i][1]*0.01, 2)
         if data['word_cloud'][i][0][0:2] == "其他":
             data['word_cloud'][i][1] = -100.00
 
@@ -189,7 +189,7 @@ def world_cloud() -> WordCloud:
             textstyle_opts=opts.TextStyleOpts(),
 
         )
-            .set_global_opts(title_opts=opts.TitleOpts(title=get_date() + "板块涨幅词云图"))
+            .set_global_opts(title_opts=opts.TitleOpts(title=get_date() + "板块涨幅词云图(单位为%)"))
     )
     return c
 
@@ -223,6 +223,7 @@ def bar_ups_and_downs() -> Bar:
     real_datas = readLatest()
     print("real_datas:")
     print(real_datas)
+    print(len(real_datas))
     update_data = {}
 
     for i in range(len(circul_all)):
@@ -230,7 +231,7 @@ def bar_ups_and_downs() -> Bar:
 
     for i in range(len(real_datas)):
         real_data = real_datas[i]
-        up_and_down_data = round((float(real_data['numerator']) / circul_all[real_data['module']]), 2)
+        up_and_down_data = round((float(real_data['numerator']) / circul_all[real_data['module']])*0.01, 2)
         update_data[real_data['module']] = up_and_down_data
 
     bar_data = []
